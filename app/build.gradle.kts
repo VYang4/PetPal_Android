@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.pet"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.pet"
@@ -36,6 +36,7 @@ android {
     }
 
     buildFeatures{
+        //noinspection DataBindingWithoutKapt
         dataBinding = true
     }
 }
@@ -56,5 +57,5 @@ dependencies {
 
     implementation("com.google.firebase:firebase-database")
 
-    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth-ktx")
 }
