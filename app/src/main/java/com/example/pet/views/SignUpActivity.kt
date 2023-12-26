@@ -1,7 +1,8 @@
-package com.example.pet
+package com.example.pet.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.pet.R
 
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
