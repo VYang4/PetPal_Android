@@ -2,39 +2,23 @@ package com.example.pet.model
 
 import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.TimeZone
+import java.util.*
 
-
-class ChatMessage {
-    var senderId: String? = null
-    var text: String? = null
+data class ChatMessage(
+    var senderId: String = "",
+    var text: String = "",
     var time: Long = 0
-    var isMine = false
+) {
+    // In Kotlin, isMine doesn't need to be a field with a getter
+    // It can simply be a property with a custom getter
+    val isMine: Boolean
+        get() = senderId == FirebaseAuth.getInstance().currentUser?.uid
 
-    constructor(senderId: String?, text: String?, time: Long) {
-        this.senderId = senderId
-        this.text = text
-        this.time = time
-    }
-
-    constructor()
-
-    fun isMine(): Boolean {
-        return if (senderId == FirebaseAuth.getInstance().currentUser!!.uid) {
-            true
-        } else false
-    }
-
-    fun setMine(mine: Boolean) {
-        isMine = mine
-    }
-
+    // Method to convert the timestamp into a human-readable time
     fun convertTime(): String {
-        val sdf = SimpleDateFormat("HH:mm")
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
         val date = Date(time)
         sdf.timeZone = TimeZone.getDefault()
         return sdf.format(date)
     }
 }
-
