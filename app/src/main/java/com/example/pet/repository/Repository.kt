@@ -54,7 +54,7 @@ class Repository {
     }
 
     // Getting Chat Groups available from Firebase Realtime DB
-    init {
+    fun getChatGroups() {
         val groupsList = mutableListOf<ChatGroup>()
 
         reference.addValueEventListener(object : ValueEventListener {

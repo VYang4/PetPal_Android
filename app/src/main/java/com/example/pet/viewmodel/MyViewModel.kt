@@ -41,6 +41,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     // Getting Chat Groups
     fun getGroupList(): MutableLiveData<List<ChatGroup>> {
+        repository.getChatGroups()
         return repository.chatGroupMutableLiveData
     }
 
@@ -49,8 +50,9 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     // Messages
-    fun getMessagesLiveData(groupName: String) {
-        return repository.getMessagesLiveData(groupName)
+    fun getMessagesLiveData(groupName: String): MutableLiveData<List<ChatMessage>> {
+        repository.getMessagesLiveData(groupName)
+        return repository.messagesLiveData
     }
 
     fun sendMessage(msg: String, chatGroup: String) {
