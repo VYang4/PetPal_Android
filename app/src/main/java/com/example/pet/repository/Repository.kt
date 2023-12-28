@@ -8,9 +8,13 @@ import com.example.pet.model.ChatGroup
 import com.example.pet.model.ChatMessage
 import com.example.pet.views.GroupsActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 
 class Repository {
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    val userLiveData = MutableLiveData<FirebaseUser?>()
+    val authErrorLiveData = MutableLiveData<String?>()
     // LiveData properties for chat groups and messages
     val chatGroupMutableLiveData = MutableLiveData<List<ChatGroup>>()
     val messagesLiveData = MutableLiveData<List<ChatMessage>>()
@@ -19,14 +23,22 @@ class Repository {
     private val reference: DatabaseReference = database.reference // The Root Reference
 
     // Auth
-    fun firebaseAnonymousAuth(context: Context) {
-        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener { task ->
+    fun signInWithEmail(email: String, password: String) {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val intent = Intent(context, GroupsActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(intent)
+                userLiveData.postValue(firebaseAuth.currentUser)
             } else {
-                Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                authErrorLiveData.postValue(task.exception?.message)
+            }
+        }
+    }
+
+    fun signUpWithEmail(email: String, password: String) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                userLiveData.postValue(firebaseAuth.currentUser)
+            } else {
+                authErrorLiveData.postValue(task.exception?.message)
             }
         }
     }

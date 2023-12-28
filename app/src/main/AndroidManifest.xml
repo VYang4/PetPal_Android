@@ -15,10 +15,13 @@
         android:theme="@style/Theme.Pet"
         tools:targetApi="31">
         <activity
-            android:name=".views.SignUpActivity"
+            android:name=".SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".views.GroupsActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".views.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
