@@ -3,10 +3,12 @@ package com.example.pet.viewmodel
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.pet.repository.Repository
 import com.example.pet.model.ChatGroup
 import com.example.pet.model.ChatMessage
+import androidx.lifecycle.Observer
 
 class MyViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -28,6 +30,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     // Getting Chat Groups
     fun getGroupList(): MutableLiveData<List<ChatGroup>> {
+        repository.getChatGroups()
         return repository.chatGroupMutableLiveData
     }
 
@@ -36,8 +39,9 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     // Messages
-    fun getMessagesLiveData(groupName: String) {
-        return repository.getMessagesLiveData(groupName)
+    fun getMessagesLiveData(groupName: String): MutableLiveData<List<ChatMessage>> {
+        repository.getMessagesLiveData(groupName)
+        return repository.messagesLiveData
     }
 
     fun sendMessage(msg: String, chatGroup: String) {
