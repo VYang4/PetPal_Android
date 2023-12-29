@@ -2,4 +2,5 @@
     <string name="app_name">Pet</string>
 
     <string name="my_map_api_key">AIzaSyCtvQkFGx9F03lz303ySeRoqF8Yclwypn0</string>
+    <string name="title_activity_maps2">MapsActivity2</string>
 </resources>

@@ -1,3 +1,5 @@
+package com.example.pet.views
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
