@@ -24,9 +24,8 @@ class LoginActivity : AppCompatActivity() {
         // Observe userLiveData for changes
         viewModel.userLiveData.observe(this) { firebaseUser ->
             if (firebaseUser != null) {
-                // User is successfully logged in, navigate to GroupsActivity
-                startActivity(Intent(this, GroupsActivity::class.java))
-                finish() // Optional: Close LoginActivity once the navigation is done
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
             }
         }
 

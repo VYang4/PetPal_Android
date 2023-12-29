@@ -2,5 +2,10 @@
     <string name="app_name">Pet</string>
 
     <string name="my_map_api_key">AIzaSyCtvQkFGx9F03lz303ySeRoqF8Yclwypn0</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_groups">Groups</string>
+    <string name="title_map">Map</string>
+    <string name="title_notifications">Notifications</string>
     <string name="title_activity_maps2">MapsActivity2</string>
 </resources>

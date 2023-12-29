@@ -1,13 +1,10 @@
 package com.example.pet.repository
 
-import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.pet.model.ChatGroup
 import com.example.pet.model.ChatMessage
-import com.example.pet.views.GroupsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
