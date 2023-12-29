@@ -44,14 +44,10 @@ class Repository {
         }
     }
 
-    // Getting Current User ID
-    fun getCurrentUserId(): String? {
-        return FirebaseAuth.getInstance().uid
-    }
-
     // SignOut Functionality
     fun signOut() {
         FirebaseAuth.getInstance().signOut()
+        userLiveData.postValue(null)
     }
 
     // Getting Chat Groups available from Firebase Realtime DB

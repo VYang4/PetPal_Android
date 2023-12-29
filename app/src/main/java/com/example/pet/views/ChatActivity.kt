@@ -54,5 +54,9 @@ class ChatActivity : AppCompatActivity() {
             myViewModel.sendMessage(msg, groupName ?: "")
             binding.edittextChatMessage.text.clear()
         }
+
+        binding.backButton.setOnClickListener {
+            finish() // Closes the ChatActivity and returns to the previous activity
+        }
     }
 }

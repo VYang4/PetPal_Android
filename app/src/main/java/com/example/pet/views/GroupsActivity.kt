@@ -1,6 +1,7 @@
 package com.example.pet.views
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Window
@@ -49,6 +50,22 @@ class GroupsActivity : AppCompatActivity() {
         }
 
         binding.fab.setOnClickListener { showDialog() }
+
+        // This observation is set up once, typically in the onCreate method of your activity.
+        // After setup, the LiveData will automatically notify the observer whenever its data changes.
+        // When userLiveData changes (for instance, when a user signs out and userLiveData is set to null),
+        // the observer's code block is executed. In your snippet, this means that if firebaseUser is null,
+        // the app will navigate back to LoginActivity.
+        myViewModel.userLiveData.observe(this) { firebaseUser ->
+            if (firebaseUser == null) {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        }
+
+        binding.returnButton.setOnClickListener {
+            myViewModel.signOut()
+        }
     }
 
     private fun showDialog() {

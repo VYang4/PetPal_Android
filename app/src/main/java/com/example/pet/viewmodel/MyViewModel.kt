@@ -31,10 +31,6 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         repository.signUpWithEmail(email, password)
     }
 
-    fun getCurrentUserId(): String? {
-        return repository.getCurrentUserId()
-    }
-
     fun signOut() {
         repository.signOut()
     }
