@@ -7,4 +7,5 @@
     <string name="title_groups">Groups</string>
     <string name="title_map">Map</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_maps2">MapsActivity2</string>
 </resources>
