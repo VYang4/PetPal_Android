@@ -38,10 +38,13 @@ class GroupsActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@GroupsActivity)
         }
 
+        chatGroupArrayList = arrayListOf() // Initialize with empty list
+        groupAdapter = GroupAdapter(chatGroupArrayList)
+        recyclerView.adapter = groupAdapter
+
         myViewModel.getGroupList().observe(this) { chatGroups ->
-            chatGroupArrayList = ArrayList(chatGroups)
-            groupAdapter = GroupAdapter(chatGroupArrayList)
-            recyclerView.adapter = groupAdapter
+            chatGroupArrayList.clear()
+            chatGroupArrayList.addAll(chatGroups)
             groupAdapter.notifyDataSetChanged()
         }
 

@@ -2,6 +2,7 @@ package com.example.pet.repository
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.pet.model.ChatGroup
@@ -56,13 +57,13 @@ class Repository {
     // Getting Chat Groups available from Firebase Realtime DB
     fun getChatGroups() {
         val groupsList = mutableListOf<ChatGroup>()
-
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 groupsList.clear()
                 for (dataSnapshot in snapshot.children) {
                     dataSnapshot.key?.let { key ->
                         groupsList.add(ChatGroup(key))
+                        Log.d("Repository", "Group added: $key") // Add this line
                     }
                 }
                 chatGroupMutableLiveData.postValue(groupsList)
@@ -70,9 +71,11 @@ class Repository {
 
             override fun onCancelled(error: DatabaseError) {
                 // Handle error
+                Log.d("Repository", "Error fetching groups: ${error.message}") // Add this line
             }
         })
     }
+
 
     // Creating a new group
     fun createNewChatGroup(groupName: String) {
