@@ -1,7 +1,6 @@
 package com.example.pet.repository
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.pet.model.ChatGroup
 import com.example.pet.model.ChatMessage
@@ -50,13 +49,13 @@ class Repository {
     // Getting Chat Groups available from Firebase Realtime DB
     fun getChatGroups() {
         val groupsList = mutableListOf<ChatGroup>()
-        reference.addValueEventListener(object : ValueEventListener {
+        reference.child("chatGroups").addValueEventListener(object : ValueEventListener {  // Assuming the child name is "chatGroups"
             override fun onDataChange(snapshot: DataSnapshot) {
                 groupsList.clear()
                 for (dataSnapshot in snapshot.children) {
-                    dataSnapshot.key?.let { key ->
-                        groupsList.add(ChatGroup(key))
-                        Log.d("Repository", "Group added: $key") // Add this line
+                    val group = dataSnapshot.getValue(ChatGroup::class.java)
+                    group?.let {
+                        groupsList.add(it)
                     }
                 }
                 chatGroupMutableLiveData.postValue(groupsList)
@@ -64,15 +63,21 @@ class Repository {
 
             override fun onCancelled(error: DatabaseError) {
                 // Handle error
-                Log.d("Repository", "Error fetching groups: ${error.message}") // Add this line
+                Log.d("Repository", "Error fetching groups: ${error.message}")
             }
         })
     }
 
 
     // Creating a new group
-    fun createNewChatGroup(groupName: String) {
-        reference.child(groupName).setValue(groupName)
+    fun createNewChatGroup(group: ChatGroup) {
+        val groupMap = mapOf(
+            "name" to group.groupName,
+            "latitude" to group.latitude,
+            "longitude" to group.longitude
+            // ... other properties if needed
+        )
+        reference.child("groups").child(group.groupName).setValue(groupMap)
     }
 
     // Getting Messages LiveData

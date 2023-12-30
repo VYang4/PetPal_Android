@@ -1,7 +1,6 @@
 package com.example.pet.viewmodel
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -41,8 +40,8 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         return repository.chatGroupMutableLiveData
     }
 
-    fun createNewGroup(groupName: String) {
-        repository.createNewChatGroup(groupName)
+    fun createNewGroup(group: ChatGroup) {
+        repository.createNewChatGroup(group)
     }
 
     // Messages

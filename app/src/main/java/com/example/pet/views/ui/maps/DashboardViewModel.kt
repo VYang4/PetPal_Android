@@ -1,4 +1,4 @@
-package com.example.pet.views.ui.dashboard
+package com.example.pet.views.ui.maps
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

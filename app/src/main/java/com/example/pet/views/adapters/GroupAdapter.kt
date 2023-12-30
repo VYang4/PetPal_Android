@@ -23,8 +23,9 @@ class GroupAdapter(private val groupArrayList: ArrayList<ChatGroup>) : RecyclerV
     }
 
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
-        val currentUser = groupArrayList[position]
-        holder.itemCardBinding.chatGroup = currentUser
+        val chatGroup = groupArrayList[position]
+        holder.itemCardBinding.chatGroup = chatGroup
+        holder.itemCardBinding.executePendingBindings()
     }
 
     override fun getItemCount(): Int {
