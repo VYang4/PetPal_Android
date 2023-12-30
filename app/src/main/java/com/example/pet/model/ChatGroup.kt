@@ -1,4 +1,4 @@
 package com.example.pet.model
 
-class ChatGroup(var groupName: String)
+class ChatGroup(val groupName: String, val latitude: Double, val longitude: Double)
 //getters and setters are automatically generated in Kotlin
