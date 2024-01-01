@@ -40,7 +40,7 @@ class GroupAdapter(private val groupArrayList: ArrayList<ChatGroup>) : RecyclerV
                 if (position != RecyclerView.NO_POSITION) {
                     val clickedChatGroup = groupArrayList[position]
                     val intent = Intent(it.context, ChatActivity::class.java)
-                    intent.putExtra("GROUP_NAME", clickedChatGroup.groupName)
+                    intent.putExtra("GROUP_NAME", clickedChatGroup.name)
                     it.context.startActivity(intent)
                 }
             }
