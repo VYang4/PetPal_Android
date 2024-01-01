@@ -73,7 +73,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private fun addGroupMarkers(googleMap: GoogleMap, groups: List<ChatGroup>) {
         groups.forEach { group ->
             val location = LatLng(group.latitude, group.longitude)
-            googleMap.addMarker(MarkerOptions().position(location).title(group.groupName))
+            googleMap.addMarker(MarkerOptions().position(location).title(group.name))
         }
     }
 

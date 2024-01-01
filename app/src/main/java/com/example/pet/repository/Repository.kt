@@ -47,9 +47,9 @@ class Repository {
     }
 
     // Getting Chat Groups available from Firebase Realtime DB
-    fun getChatGroups() {
+    fun getChatGroups(): MutableLiveData<List<ChatGroup>> {
         val groupsList = mutableListOf<ChatGroup>()
-        reference.child("chatGroups").addValueEventListener(object : ValueEventListener {  // Assuming the child name is "chatGroups"
+        reference.child("groups").addValueEventListener(object : ValueEventListener {  // Assuming the child name is "chatGroups"
             override fun onDataChange(snapshot: DataSnapshot) {
                 groupsList.clear()
                 for (dataSnapshot in snapshot.children) {
@@ -66,22 +66,23 @@ class Repository {
                 Log.d("Repository", "Error fetching groups: ${error.message}")
             }
         })
+        return chatGroupMutableLiveData
     }
 
 
     // Creating a new group
     fun createNewChatGroup(group: ChatGroup) {
         val groupMap = mapOf(
-            "name" to group.groupName,
+            "name" to group.name,
             "latitude" to group.latitude,
             "longitude" to group.longitude
             // ... other properties if needed
         )
-        reference.child("groups").child(group.groupName).setValue(groupMap)
+        reference.child("groups").child(group.name).setValue(groupMap)
     }
 
     // Getting Messages LiveData
-    fun getMessagesLiveData(groupName: String) {
+    fun getMessagesLiveData(groupName: String): MutableLiveData<List<ChatMessage>> {
         val groupReference = database.reference.child(groupName)
         val messagesList = mutableListOf<ChatMessage>()
 
@@ -100,6 +101,7 @@ class Repository {
                 // Handle error
             }
         })
+        return messagesLiveData
     }
 
     // Sending Messages
