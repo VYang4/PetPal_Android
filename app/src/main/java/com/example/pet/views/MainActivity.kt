@@ -5,7 +5,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.pet.R
 import com.example.pet.databinding.ActivityMainBinding
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_groups, R.id.navigation_maps, R.id.navigation_notifications
+                R.id.navigation_groups, R.id.navigation_maps, R.id.navigation_profile
             )
         )
         navView.setupWithNavController(navController)

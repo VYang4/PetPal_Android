@@ -1,4 +1,4 @@
-package com.example.pet.views.ui.notifications
+package com.example.pet.views.ui.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
