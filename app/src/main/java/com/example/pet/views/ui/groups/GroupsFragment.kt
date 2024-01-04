@@ -57,9 +57,6 @@ class GroupsFragment : Fragment() {
 
         myViewModel = ViewModelProvider(this)[MyViewModel::class.java]
 
-        // chatGroupArrayList = arrayListOf<ChatGroup>()
-        // groupAdapter = GroupAdapter(chatGroupArrayList)
-
         recyclerView = binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             // adapter = groupAdapter
@@ -76,22 +73,6 @@ class GroupsFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener { showDialog() }
-        binding.returnButton.setOnClickListener {
-            myViewModel.signOut()
-        }
-
-        myViewModel.userLiveData.observe(viewLifecycleOwner) { firebaseUser ->
-            if (firebaseUser == null) {
-                startActivity(Intent(context, LoginActivity::class.java))
-                activity?.finish()
-            }
-        }
-//        myViewModel.getGroupList().observe(viewLifecycleOwner) { chatGroups ->
-//            Log.d("GroupsFragment", "Number of groups: ${chatGroups.size}")
-//            chatGroupArrayList.clear()
-//            chatGroupArrayList.addAll(chatGroups)
-//            groupAdapter.notifyDataSetChanged()
-//        }
     }
 
     private fun showDialog() {
