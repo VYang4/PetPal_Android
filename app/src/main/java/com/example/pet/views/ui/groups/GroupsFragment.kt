@@ -2,11 +2,9 @@ package com.example.pet.views.ui.groups
 
 import android.Manifest
 import android.app.Dialog
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +21,6 @@ import com.example.pet.R
 import com.example.pet.databinding.FragmentGroupsBinding
 import com.example.pet.model.ChatGroup
 import com.example.pet.viewmodel.MyViewModel
-import com.example.pet.views.LoginActivity
 import com.example.pet.views.adapters.GroupAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -72,13 +69,14 @@ class GroupsFragment : Fragment() {
             groupAdapter.notifyDataSetChanged() // This will refresh the RecyclerView with new data
         }
 
-        binding.fab.setOnClickListener { showDialog() }
+        binding.add.setOnClickListener { showDialogAdd() }
+        binding.delete.setOnClickListener {showDialogDelete() }
     }
 
-    private fun showDialog() {
+    private fun showDialogAdd() {
         val chatGroupDialog = Dialog(requireContext()).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
-            setContentView(R.layout.dialog_layout)
+            setContentView(R.layout.dialog_add)
             show()
         }
 
@@ -94,6 +92,32 @@ class GroupsFragment : Fragment() {
             chatGroupDialog.dismiss()
         }
     }
+
+    private fun showDialogDelete() {
+        val chatGroupDialog = Dialog(requireContext()).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.dialog_delete)
+            show()
+        }
+
+        chatGroupDialog.findViewById<Button>(R.id.submit_btn).setOnClickListener {
+            val groupName = chatGroupDialog.findViewById<EditText>(R.id.chat_group_edt).text.toString()
+
+            // Find the group with the given name
+            val groupToDelete = chatGroupArrayList.find { it.name == groupName }
+
+            if (groupToDelete != null) {
+                // Delete the group
+                myViewModel.deleteGroup(groupToDelete)
+                Toast.makeText(context, "Group '$groupName' deleted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Group '$groupName' not found", Toast.LENGTH_SHORT).show()
+            }
+
+            chatGroupDialog.dismiss()
+        }
+    }
+
 
     private fun getCurrentLocation(callback: (Location) -> Unit) {
         if (ActivityCompat.checkSelfPermission(

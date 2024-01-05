@@ -44,6 +44,9 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         repository.createNewChatGroup(group)
     }
 
+    fun deleteGroup(group: ChatGroup) {
+        repository.deleteChatGroup(group)
+    }
     // Messages
     fun getMessagesLiveData(groupName: String): MutableLiveData<List<ChatMessage>> {
         repository.getMessagesLiveData(groupName)
