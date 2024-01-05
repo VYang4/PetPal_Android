@@ -1,12 +1,14 @@
 package com.example.pet.repository
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.pet.model.ChatGroup
 import com.example.pet.model.ChatMessage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+//import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 class Repository {
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -79,6 +81,10 @@ class Repository {
             // ... other properties if needed
         )
         reference.child("groups").child(group.name).setValue(groupMap)
+    }
+
+    fun deleteChatGroup(group: ChatGroup) {
+        reference.child("groups").child(group.name).removeValue()
     }
 
     // Getting Messages LiveData
