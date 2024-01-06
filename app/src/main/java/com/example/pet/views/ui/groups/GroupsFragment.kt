@@ -24,6 +24,7 @@ import com.example.pet.viewmodel.MyViewModel
 import com.example.pet.views.adapters.GroupAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
 
 class GroupsFragment : Fragment() {
 
@@ -69,6 +70,10 @@ class GroupsFragment : Fragment() {
             groupAdapter.notifyDataSetChanged() // This will refresh the RecyclerView with new data
         }
 
+//        myViewModel.deleteGroupStatus.observe(viewLifecycleOwner) { statusMessage ->
+//            Toast.makeText(requireContext(), statusMessage, Toast.LENGTH_SHORT).show()
+//        }
+
         binding.add.setOnClickListener { showDialogAdd() }
         binding.delete.setOnClickListener {showDialogDelete() }
     }
@@ -82,10 +87,10 @@ class GroupsFragment : Fragment() {
 
         chatGroupDialog.findViewById<Button>(R.id.submit_btn).setOnClickListener {
             val groupName = chatGroupDialog.findViewById<EditText>(R.id.chat_group_edt).text.toString()
-
+            val currentUserId = getCurrentUserId()
             getCurrentLocation { location ->
                 // Create group with location data
-                val group = ChatGroup(groupName, location.latitude, location.longitude)
+                val group = ChatGroup(groupName, location.latitude, location.longitude, currentUserId)
                 myViewModel.createNewGroup(group)
                 Toast.makeText(context, "Group '$groupName' created at your current location", Toast.LENGTH_SHORT).show()
             }
@@ -108,16 +113,23 @@ class GroupsFragment : Fragment() {
 
             if (groupToDelete != null) {
                 // Delete the group
-                myViewModel.deleteGroup(groupToDelete)
-                Toast.makeText(context, "Group '$groupName' deleted", Toast.LENGTH_SHORT).show()
+                val currentUserId = getCurrentUserId() // Make sure this method retrieves the current user's ID
+                if (currentUserId != null) {
+                    myViewModel.deleteGroup(groupToDelete, currentUserId)
+                }
             } else {
                 Toast.makeText(context, "Group '$groupName' not found", Toast.LENGTH_SHORT).show()
             }
+
 
             chatGroupDialog.dismiss()
         }
     }
 
+    private fun getCurrentUserId(): String? {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        return currentUser?.uid
+    }
 
     private fun getCurrentLocation(callback: (Location) -> Unit) {
         if (ActivityCompat.checkSelfPermission(

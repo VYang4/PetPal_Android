@@ -8,6 +8,8 @@ import com.example.pet.model.ChatMessage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import androidx.fragment.app.Fragment
+
 //import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 class Repository {
@@ -72,19 +74,30 @@ class Repository {
     }
 
 
+
     // Creating a new group
     fun createNewChatGroup(group: ChatGroup) {
         val groupMap = mapOf(
             "name" to group.name,
             "latitude" to group.latitude,
-            "longitude" to group.longitude
+            "longitude" to group.longitude,
+            "creatorId" to group.creatorId
             // ... other properties if needed
         )
         reference.child("groups").child(group.name).setValue(groupMap)
     }
 
-    fun deleteChatGroup(group: ChatGroup) {
-        reference.child("groups").child(group.name).removeValue()
+    fun deleteGroup(group: ChatGroup, currentUserId: String): Result<Unit> {
+        return if (group.creatorId == currentUserId) {
+            try {
+                reference.child("groups").child(group.name).removeValue()
+                Result.success(Unit)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        } else {
+            Result.failure(Exception("Unauthorized to delete this group"))
+        }
     }
 
     // Getting Messages LiveData

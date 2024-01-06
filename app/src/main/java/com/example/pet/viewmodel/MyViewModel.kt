@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.pet.repository.Repository
 import com.example.pet.model.ChatGroup
 import com.example.pet.model.ChatMessage
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class MyViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,6 +20,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
+    val deleteGroupStatus = MutableLiveData<String>()
 
     fun signInWithEmail() {
         val emailStr = email.value ?: return
@@ -44,9 +46,15 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         repository.createNewChatGroup(group)
     }
 
-    fun deleteGroup(group: ChatGroup) {
-        repository.deleteChatGroup(group)
+    fun deleteGroup(group: ChatGroup, currentUserId: String) {
+        val result = repository.deleteGroup(group, currentUserId)
+        result.onSuccess {
+            deleteGroupStatus.postValue("Group '${group.name}' successfully deleted.")
+        }.onFailure { e ->
+            deleteGroupStatus.postValue(e.message ?: "Error occurred")
+        }
     }
+
     // Messages
     fun getMessagesLiveData(groupName: String): MutableLiveData<List<ChatMessage>> {
         repository.getMessagesLiveData(groupName)
@@ -56,4 +64,6 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     fun sendMessage(msg: String, chatGroup: String) {
         repository.sendMessage(msg, chatGroup)
     }
+
+
 }
