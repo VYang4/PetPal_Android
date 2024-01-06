@@ -24,19 +24,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBD90SUgV9blVi9yupSy4AoQofHAAJWvIM" />
-        android:value="${MAPS_API_KEY}" />
-
-        <!--        <activity-->
-        <!--            android:name=".views.MapsActivity"-->
-        @@ -40,10 +40,6 @@
-        android:exported="true"
-        android:label="@string/title_activity_main" />
-
-        <!--        <activity-->
-        <!--            android:name=".views.MapsActivity"-->
-        <!--            android:exported="false"-->
-        <!--            android:label="@string/title_activity_maps" />-->
+            android:value="${MAPS_API_KEY}" />
         <activity
             android:name=".views.MainActivity"
             android:exported="true"
